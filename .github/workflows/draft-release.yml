@@ -25,6 +25,7 @@ jobs:
         github-token: "${{ secrets.GITHUB_TOKEN }}"
         script: |
           const { LATEST_TAG } = process.env
+          console.log(${LATEST_TAG})
           github.rest.repos.createRelease({
             owner: dwelch-spike
             repo: aerospike-tools-backup
