@@ -20,12 +20,12 @@ jobs:
       uses: "actions/github-scripts@v6"
       with:
         github-token: "${{ secrets.GITHUB_TOKEN }}"
-      script: |
-        const { LATEST_TAG } = process.env
-        await github.rest.repos.createRelease({
-          owner: dwelch-spike
-          repo: aerospike-tools-backup
-          tag_name: ${LATEST_TAG}
-          draft: true
-          generate_release_notes: true
-        })
+        script: |
+          const { LATEST_TAG } = process.env
+          await github.rest.repos.createRelease({
+            owner: dwelch-spike
+            repo: aerospike-tools-backup
+            tag_name: ${LATEST_TAG}
+            draft: true
+            generate_release_notes: true
+          })
