@@ -10,7 +10,7 @@ on:
 jobs:
   draft-release-notes:
     runs-on: ubuntu-20.04
-    name: "Draft Release"
+    name: Draft Release
     steps:
     - uses: actions/checkout@v3
       with:
@@ -19,13 +19,13 @@ jobs:
       run: |
         LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
-    - name: Download zstd
+    - name: Push Release Draft
       uses: "actions/github-script@v6"
       with:
         github-token: "${{ secrets.GITHUB_TOKEN }}"
         script: |
           const { LATEST_TAG } = process.env
-          await github.rest.repos.createRelease({
+          github.rest.repos.createRelease({
             owner: dwelch-spike
             repo: aerospike-tools-backup
             tag_name: ${LATEST_TAG}
