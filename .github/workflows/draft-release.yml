@@ -10,9 +10,10 @@ on:
 jobs:
   draft-release-notes:
     runs-on: ubuntu-20.04
-    name: "Tagged Release"
+    name: "Draft Release"
     steps:
     - name: Get Latest Tag
+      uses: "actions/checkout@v3"
       run: |
         LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
