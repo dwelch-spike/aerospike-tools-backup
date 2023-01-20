@@ -1,0 +1,31 @@
+---
+name: "Draft Release"
+
+on:
+  push:
+    branches: [ master, test-auto-release ]
+    tags:
+      - "v*"
+
+jobs:
+  draft-release-notes:
+    runs-on: ubuntu-20.04
+    name: "Tagged Release"
+    steps:
+    - name: Get Latest Tag
+      run: |
+        LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+        echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+    - name: Download zstd
+      uses: "actions/github-scripts@v6"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+      script: |
+        const { LATEST_TAG } = process.env
+        await github.rest.repos.createRelease({
+          owner: dwelch-spike
+          repo: aerospike-tools-backup
+          tag_name: ${LATEST_TAG}
+          draft: true
+          generate_release_notes: true
+        })
